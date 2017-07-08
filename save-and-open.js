@@ -36,24 +36,19 @@ function loadFileAsText()
     fileReader.onload = function() 
     {
         var textFromFileLoaded = fileReader.result;
-//      console.log(textFromFileLoaded);
-        var lines = textFromFileLoaded.split(/\r\n|\r|\n/);
-        for (i=0; i < lines.length; i++) {
-            var node = document.createElement("div");
-            node.setAttribute("class", "ace_line");
-            node.setAttribute("style", "height:16px");
-            node.textContent = lines[i];
-            loc.appendChild(node);
-        }
-        var dummy = document.createElement("input");
-        document.body.appendChild(dummy);
-        //$(dummy).css('display', 'none');
-        dummy.setAttribute("id", "dummy_id");
-        document.getElementById("dummy_id").value = textFromFileLoaded;
-        dummy.select();
-        document.execCommand("copy");
-        document.execCommand("paste");
-        document.body.removeChild(dummy);
+        var node = document.createElement("div");
+        node.setAttribute("id", "fileedit");
+        node.textContent = textFromFileLoaded;
+        document.body.appendChild(node);
+//        console.log(textFromFileLoaded);
+//        var lines = textFromFileLoaded.split(/\r\n|\r|\n/);
+//        for (i=0; i < lines.length; i++) {
+//            var node = document.createElement("div");
+//            node.setAttribute("class", "ace_line");
+//            node.setAttribute("style", "height:16px");
+//            node.textContent = lines[i];
+//            loc.appendChild(node);
+//        }
     };
     fileReader.readAsText(fileToLoad, "utf-8");
     
@@ -64,11 +59,4 @@ function extractedvals() {
     for (var i=0;i<tobeextractedvals.length;i++){
         console.log(tobeextractedvals[i].textcontent);
     }
-}
-
-function InitialLoad(fileName)
-{
-    var pre = document.getElementById("editor");
-    var fileToLoad = document.getElementByID("initFile");
-    
 }
