@@ -24,34 +24,18 @@ function destroyClickedElement(event)
  
 function loadFileAsText()
 {
-    var list = document.getElementsByClassName('ace_line');
-    for(var i = list.length - 1; 0 <= i; i--)
-        if(list[i] && list[i].parentElement)
-            list[i].parentElement.removeChild(list[i]);
-    var pre = document.getElementsByClassName('ace_layer ace_text-layer');
-    var loc = pre[0];
-
-    var fileToLoad = document.getElementById("fileToLoad").files[0];
-    var fileReader = new FileReader();
-    fileReader.onload = function() 
-    {
-        var textFromFileLoaded = fileReader.result;
-        var node = document.createElement("div");
-        node.setAttribute("id", "fileedit");
-        node.textContent = textFromFileLoaded;
-        document.body.appendChild(node);
-//        console.log(textFromFileLoaded);
-//        var lines = textFromFileLoaded.split(/\r\n|\r|\n/);
-//        for (i=0; i < lines.length; i++) {
-//            var node = document.createElement("div");
-//            node.setAttribute("class", "ace_line");
-//            node.setAttribute("style", "height:16px");
-//            node.textContent = lines[i];
-//            loc.appendChild(node);
-//        }
-    };
-    fileReader.readAsText(fileToLoad, "utf-8");
-    
+    var fileName = document.getElementById("fileToLoad").files[0];
+    fileReader = new FileReader();
+    var fileContents;
+    fileReader.onload = function () {
+	fileContents = fileReader.result;
+	console.log(fileContents); 
+    }
+    fileReader.onloadend = function(evt) {
+	localStorage.setItem("file", fileContents);
+	window.open("editor.html", "_self");
+    }
+    fileReader.readAsText(fileName, "utf-8");
 }
 
 function extractedvals() {
